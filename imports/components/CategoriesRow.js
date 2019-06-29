@@ -1,23 +1,22 @@
 //import liraries
-import React, { Component } from "react";
-import { Grid, Col, Row } from "native-base";
-import CategoryCard from "./CategoryCard";
-import { connect } from "react-redux";
-import { selectCategory } from "../actions/category_actions";
+import React, { Component } from 'react'
+import { Grid, Col, Row } from 'native-base'
+import CategoryCard from './CategoryCard'
+import { connect } from 'react-redux'
+import { selectCategory } from '../actions/category_actions'
 // create a component
 class CategoriesRow extends Component {
-  onClick = (category) => {
-    this.props.selectCategory(category);
-  };
+  onClick = category => {
+    this.props.selectCategory(category)
+  }
 
-  
   render() {
     return (
       <Grid
         style={{
           backgroundColor: this.props.bgColor,
           paddingBottom: 50,
-          minHeight: 130
+          minHeight: 130,
         }}
       >
         <Col>
@@ -58,25 +57,25 @@ class CategoriesRow extends Component {
           </Row>
         </Col>
       </Grid>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => {
   return {
-    category: state.category
-  };
-};
+    category: state.category,
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
     selectCategory: category => {
-      dispatch(selectCategory(category));
-    }
-  };
-};
+      dispatch(selectCategory(category))
+    },
+  }
+}
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CategoriesRow);
+)(CategoriesRow)

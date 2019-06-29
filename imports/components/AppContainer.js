@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import React, { Component } from 'react'
+import { createStackNavigator, createAppContainer } from 'react-navigation'
 
-import Home from "../screens/Home";
-import VideoScreen from "../screens/VideoScreen";
+import Home from '../screens/Home'
+import VideoScreen from '../screens/VideoScreen'
 
 const AppNavigator = createStackNavigator({
   Home: Home,
-  VideoScreen: VideoScreen
-});
+  VideoScreen: VideoScreen,
+})
 
-const AppContainer = createAppContainer(AppNavigator);
-export default AppContainer;
+const AppContainer = createAppContainer(AppNavigator)
+export default AppContainer

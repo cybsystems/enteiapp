@@ -3,12 +3,6 @@ import React, { Component } from "react";
 
 import {
   Container,
-  Header,
-  Content,
-  Form,
-  Item,
-  Input,
-  Label
 } from "native-base";
 import Splash from "./imports/screens/Splash";
 import AppContainer from "./imports/components/AppContainer";
@@ -27,7 +21,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    return (
+    return ( 
       <Container>
         {!this.state.showNextScreen ? <Splash /> : <AppContainerWithLogin />}
       </Container>

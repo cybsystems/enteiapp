@@ -1,22 +1,22 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
-import { createDrawerNavigator, createAppContainer } from "react-navigation";
-import { View, Text, StatusBar, StyleSheet } from "react-native";
-import DrawerMenu from "./DrawerMenu";
-import Categories from "../screens/Categories";
-import VideoScreen from "../screens/VideoScreen";
+import { createDrawerNavigator, createAppContainer } from 'react-navigation'
+import { View, Text, StatusBar, StyleSheet } from 'react-native'
+import DrawerMenu from './DrawerMenu'
+import Categories from '../screens/Categories'
+import VideoScreen from '../screens/VideoScreen'
 
 const DrawerNavigator = createDrawerNavigator(
   {
     Categories: { screen: Categories },
-    VideoScreen: { screen: VideoScreen }
+    VideoScreen: { screen: VideoScreen },
   },
   {
-    initialRouteName: "Categories",
+    initialRouteName: 'Categories',
     contentComponent: DrawerMenu,
-    drawerWidth: 300
+    drawerWidth: 300,
   }
-);
+)
 
-const DrawerLayoutContainer = createAppContainer(DrawerNavigator);
-export default DrawerLayoutContainer;
+const DrawerLayoutContainer = createAppContainer(DrawerNavigator)
+export default DrawerLayoutContainer

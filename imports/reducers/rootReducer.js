@@ -1,10 +1,10 @@
-import { combineReducers } from "redux";
-import categoryReducer from "./categoryReducers";
-import loginReducers from "./loginReducers";
+import { combineReducers } from 'redux'
+import categoryReducer from './categoryReducers'
+import loginReducers from './loginReducers'
 
 const rootReducer = combineReducers({
   category: categoryReducer,
-  login: loginReducers
-});
+  login: loginReducers,
+})
 
-export default rootReducer;
+export default rootReducer
