@@ -83,7 +83,7 @@ class Categories extends Component {
     const { videosToShow } = this.state
     const { bgColor } = this.props.category
     const screenWidth = Math.round(Dimensions.get('window').width)
-
+    
     return (
       <View>
         <StatusBar backgroundColor={bgColor} barStyle="light-content" />
@@ -124,24 +124,24 @@ class Categories extends Component {
           }}
         >
           {videosToShow &&
-          this.state.classes &&
-          this.state.classes.length > 0 ? (
-            <Picker
-              selectedValue={this.state.currentClass}
-              style={{ height: 50, width: 180, color: 'white' }}
-              onValueChange={this.onClassChange}
-            >
-              {this.state.classes.map((currentClass, i) => (
-                <Picker.Item
-                  key={i}
-                  label={'Std.  ' + currentClass}
-                  value={currentClass}
-                />
-              ))}
-            </Picker>
-          ) : (
-            <View></View>
-          )}
+            this.state.classes &&
+            this.state.classes.length > 0 ? (
+              <Picker
+                selectedValue={this.state.currentClass}
+                style={{ height: 50, width: 180, color: 'white' }}
+                onValueChange={this.onClassChange}
+              >
+                {this.state.classes.map((currentClass, i) => (
+                  <Picker.Item
+                    key={i}
+                    label={'Std.  ' + currentClass}
+                    value={currentClass}
+                  />
+                ))}
+              </Picker>
+            ) : (
+              <View></View>
+            )}
         </View>
         <View style={{ minHeight: 500 }}>
           {videosToShow ? (
@@ -151,12 +151,12 @@ class Categories extends Component {
                   <Text>NO VIDEOS</Text>
                 </View>
               ) : (
-                <CategoryContainer videos={videosToShow} {...this.props} />
-              )}
+                  <CategoryContainer videos={videosToShow} {...this.props} />
+                )}
             </React.Fragment>
           ) : (
-            <Text style={{ alignSelf: 'center' }}>Loading Videos</Text>
-          )}
+              <Text style={{ alignSelf: 'center' }}>Loading Videos</Text>
+            )}
         </View>
       </View>
     )
@@ -174,8 +174,10 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => {
+  const { user, category } = state
   return {
-    category: state.category,
+    category: category,
+    user: user
   }
 }
 

@@ -1,27 +1,42 @@
-//import liraries
-import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-
-// create a component
-class DrawerMenu extends Component {
+import React from "react";
+import { AppRegistry, Image, StatusBar } from "react-native";
+import { Container, Content, Text, List, ListItem, View } from "native-base";
+const routes = ["Videos", "Profile"];
+export default class DrawerMenu extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>DrawerMenu</Text>
-      </View>
-    )
+      <Container>
+        <Content>
+          <View>
+            <View
+              style={{
+                height: 180,
+                alignSelf: "stretch",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: '#002e61'
+              }} >
+              <Image
+                square
+                style={{ height: 90, width: 90 }}
+                source={require('../../assets/man.png')}
+              />
+            </View>
+          </View>
+          <List
+            dataArray={routes}
+            renderRow={data => {
+              return (
+                <ListItem
+                  button
+                  onPress={() => this.props.navigation.navigate(data)}>
+                  <Text>{data}</Text>
+                </ListItem>
+              );
+            }}
+          />
+        </Content>
+      </Container>
+    );
   }
 }
-
-// define your styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-})
-
-//make this component available to the app
-export default DrawerMenu
