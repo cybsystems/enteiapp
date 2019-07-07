@@ -11,7 +11,6 @@ class VideoScreen extends Component {
   constructor() {
     super()
     this.comment = null
-
   }
   render() {
     const { height, width } = Dimensions.get('window')
@@ -25,10 +24,10 @@ class VideoScreen extends Component {
 
     return (
       <View  >
-        <StatusBar backgroundColor="black" barStyle="light-content" />
+        <StatusBar backgroundColor="#0142ad" barStyle="light-content" />
         <WebView
           source={{ uri: url }}
-          style={{ minHeight: 200, backgroundColor: 'black' }}
+          style={{ minHeight: 200, backgroundColor: 'white' }}
         />
 
 

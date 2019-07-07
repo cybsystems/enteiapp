@@ -1,7 +1,9 @@
 import React from "react";
 import { AppRegistry, Image, StatusBar } from "react-native";
 import { Container, Content, Text, List, ListItem, View } from "native-base";
-const routes = ["Videos", "Profile"];
+import store from "../store/stores";
+const routes = [{ label: "Videos", to: 'Categories' }, { label: "PDFs", to: 'PDFScreen' }];
+
 export default class DrawerMenu extends React.Component {
   render() {
     return (
@@ -21,6 +23,9 @@ export default class DrawerMenu extends React.Component {
                 style={{ height: 90, width: 90 }}
                 source={require('../../assets/man.png')}
               />
+              <Text style={{ color: 'white', fontSize: 30 }}>
+                Hi {store.getState().login.user.users_name}
+              </Text>
             </View>
           </View>
           <List
@@ -29,8 +34,12 @@ export default class DrawerMenu extends React.Component {
               return (
                 <ListItem
                   button
-                  onPress={() => this.props.navigation.navigate(data)}>
-                  <Text>{data}</Text>
+                  onPress={() => {
+                     
+                    this.props.navigation.navigate(data.to)
+                  }
+                  }>
+                  <Text>{data.label}</Text>
                 </ListItem>
               );
             }}

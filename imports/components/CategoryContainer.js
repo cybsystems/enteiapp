@@ -30,11 +30,11 @@ class CategoryContainer extends Component {
   render() {
     const { bgColor } = this.props.category
     let { videos } = this.props
-
-    videos.push({
-      videos_id: videos[videos.length - 1].videos_id + 1,
-      ITEM_TYPE: 'LAST',
-    })
+    if (videos && !videos[videos.length - 1].ITEM_TYPE)
+      videos.push({
+        videos_id: videos[videos.length - 1].videos_id + 1,
+        ITEM_TYPE: 'LAST',
+      })
     return (
       <View style={{ flex: 1 }}>
         <FlatList
@@ -54,52 +54,52 @@ class CategoryContainer extends Component {
                   </CardItem>
                 </Card>
               ) : (
-                <TouchableOpacity
-                  onPress={() => {
-                    this.onVideoSelect(item)
-                  }}
-                  style={styles.itemContainer}
-                >
-                  <View>
-                    <Video
-                      source={{
-                        uri:
-                          'http://bhoomi.pe.hu/videos/' +
-                          item.videos_id +
-                          '.mp4',
-                      }}
-                      ref={ref => {
-                        this.player = ref
-                      }} // Store reference
-                      onBuffer={() => {}} // Callback when remote video is buffering
-                      onError={() => {}}
-                      style={{
-                        width: this.screenWidth - 40,
-                        height: 200,
-                        paddingHorizontal: 30,
-                      }}
-                      paused={true} // Callback when video cannot be loaded
-                    />
-                    <Text
-                      style={{
-                        fontSize: 25,
-                        color: 'black',
-                        marginTop: 20,
-                        marginLeft: 20,
-                      }}
-                    >
-                      {item.videos_title}
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      borderBottomColor: 'black',
-                      borderBottomWidth: 1,
-                      marginTop: 20,
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.onVideoSelect(item)
                     }}
-                  />
-                </TouchableOpacity>
-              )}
+                    style={styles.itemContainer}
+                  >
+                    <View>
+                      <Video
+                        source={{
+                          uri:
+                            'http://bhoomi.pe.hu/videos/' +
+                            item.videos_id +
+                            '.mp4',
+                        }}
+                        ref={ref => {
+                          this.player = ref
+                        }} // Store reference
+                        onBuffer={() => { }} // Callback when remote video is buffering
+                        onError={() => { }}
+                        style={{
+                          width: this.screenWidth - 40,
+                          height: 200,
+                          paddingHorizontal: 30,
+                        }}
+                        paused={true} // Callback when video cannot be loaded
+                      />
+                      <Text
+                        style={{
+                          fontSize: 25,
+                          color: 'black',
+                          marginTop: 20,
+                          marginLeft: 20,
+                        }}
+                      >
+                        {item.videos_title}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        borderBottomColor: 'black',
+                        borderBottomWidth: 0.2,
+                        marginTop: 20,
+                      }}
+                    />
+                  </TouchableOpacity>
+                )}
             </View>
           )}
         />

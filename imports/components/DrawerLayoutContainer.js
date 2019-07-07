@@ -6,11 +6,13 @@ import DrawerMenu from './DrawerMenu'
 import Categories from '../screens/Categories'
 import VideoScreen from '../screens/VideoScreen'
 import UserCategoryScreen from '../screens/UserCategoryScreen';
+import PDFScreen from '../screens/PDFScreen';
 
 const DrawerNavigator = createDrawerNavigator(
   {
     Categories: { screen: UserCategoryScreen },
     VideoScreen: { screen: VideoScreen },
+    PDFScreen: { screen: PDFScreen }
   },
   {
     initialRouteName: 'Categories',
@@ -18,6 +20,5 @@ const DrawerNavigator = createDrawerNavigator(
     drawerWidth: 300,
   }
 )
-
 const DrawerLayoutContainer = createAppContainer(DrawerNavigator)
 export default DrawerLayoutContainer

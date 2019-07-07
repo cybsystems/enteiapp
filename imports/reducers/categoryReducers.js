@@ -5,10 +5,11 @@ const initialState = {
   bgColor: '#0142ad',
   category: 'MARATHI_MED',
   videos: null,
+  pdfs: null
 }
 
 let newState
-let videos, videosForCategory
+let videos, videosForCategory, pdfs
 
 const categoryReducer = (state = {}, action) => {
   switch (action.type) {
@@ -21,6 +22,12 @@ const categoryReducer = (state = {}, action) => {
       newState.videosForCategory = videosForCategory
       return newState
 
+    case 'ON_STORE_PDF':
+      newState = Object.assign({}, state)
+      pdfs = action.pdfs
+      newState.pdfsForCategory = pdfs
+      newState.pdfsToShow = pdfs
+      return newState
 
     case ON_STORE_VIDEO:
       newState = Object.assign({}, state)
