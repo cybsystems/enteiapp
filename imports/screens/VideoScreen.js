@@ -11,16 +11,18 @@ class VideoScreen extends Component {
   constructor() {
     super()
     this.comment = null
+
   }
   render() {
     const { height, width } = Dimensions.get('window')
-
+    const currentUser = store.getState().login.user
     const video = this.props.navigation.getParam('video')
 
     const url =
       'http://bhoomi.pe.hu/entei/showvideo.html?video=' + video.videos_url
     let comments = video.comments
-    comments.push({ ITEM_TYPE: 'LAST', vc_id: comments[comments.length - 1].vc_id + 1 })
+    comments.push({ ITEM_TYPE: 'LAST', vc_id: comments.length ? comments[comments.length - 1].vc_id + 1 : 0 })
+
     return (
       <View  >
         <StatusBar backgroundColor="black" barStyle="light-content" />
@@ -63,7 +65,7 @@ class VideoScreen extends Component {
                     <CardItem>
                       <Body>
                         <View style={{ padding: 5 }}>
-                        <Text>{item.users_name} </Text>
+                          <Text>{item.users_id === currentUser.users_id ? 'You' : item.users_name} </Text>
                           <Text>{item.comment} </Text>
                         </View>
                       </Body>
