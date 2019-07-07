@@ -15,6 +15,8 @@ import { connect } from 'react-redux'
 import { selectCategory, getVideos } from '../actions/category_actions'
 import CategoryContainer from '../components/CategoryContainer'
 import CategoryCard from '../components/CategoryCard'
+import store from '../store/stores';
+import { ON_SEARCH_VIDEO } from '../actionTypes/actionTypes';
 
 // create a component
 class UserCategory extends Component {
@@ -30,23 +32,7 @@ class UserCategory extends Component {
     componentDidMount() {
         this.props.getVideos()
     }
-    getClasses = videosForCategory => {
-        let classes = videosForCategory
-            .map(video => parseInt(video.videos_class))
-            .sort()
-        let classSet = new Set(classes)
-        classes = [...classSet]
-        const videos = this.props.category.videosForCategory.filter(
-            video => video.videos_class == parseInt(this.props.user.clss)
-        )
 
-        this.setState({
-            classes: classes,
-            currentClass: classes[0],
-            videosForCategory: videos,
-            videosToShow: videos,
-        })
-    }
 
     onClassChange = (itemValue, itemIndex) => {
         const videos = this.props.category.videosForCategory.filter(
@@ -59,37 +45,19 @@ class UserCategory extends Component {
         })
     }
 
-    onSearch = text => {
-        const { videosForCategory } = this.state
+    onSearch = text => store.dispatch({ type: ON_SEARCH_VIDEO, text: text })
 
-        const videosToShow = videosForCategory.filter(
-            video =>
-                video &&
-                video.videos_title &&
-                (video.videos_title.toLowerCase().includes(text.toLowerCase()) ||
-                    video.videos_desc.toLowerCase().includes(text.toLowerCase()))
-        )
-        this.setState({ videosToShow: videosToShow })
-    }
 
-    componentDidUpdate(prevProps) {
-        if (
-            prevProps.category.videosForCategory !==
-            this.props.category.videosForCategory
-        )
-            this.getClasses(this.props.category.videosForCategory)
-    }
+
     render() {
-        const { videosToShow } = this.state
 
-        const { bgColor } = this.props.category
-
+        const { bgColor, videosToShow } = this.props.category
         const screenWidth = Math.round(Dimensions.get('window').width)
-
+         
         return (
             <View>
-                <StatusBar backgroundColor={bgColor} barStyle="light-content" />
-                <Grid style={{ backgroundColor: bgColor, minHeight: 100 }}>
+                <StatusBar backgroundColor={bgColor ? bgColor : '#0142ad'} barStyle="light-content" />
+                <Grid style={{ backgroundColor: bgColor ? bgColor : '#0142ad', minHeight: 100 }}>
                     <Row style={{ marginLeft: 10, marginBottom: 60, marginTop: 30 }}>
                         <Button transparent onPress={this.onMenuClicked}>
                             <Image

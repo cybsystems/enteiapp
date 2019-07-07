@@ -77,17 +77,18 @@ class Categories extends Component {
       prevProps.category.videosForCategory !==
       this.props.category.videosForCategory
     )
+     
       this.getClasses(this.props.category.videosForCategory)
   }
   render() {
     const { videosToShow } = this.state
     const { bgColor } = this.props.category
     const screenWidth = Math.round(Dimensions.get('window').width)
-    
+
     return (
       <View>
-        <StatusBar backgroundColor={bgColor} barStyle="light-content" />
-        <Grid style={{ backgroundColor: bgColor, minHeight: 60 }}>
+        <StatusBar backgroundColor={bgColor ? bgColor : '#0142ad'} barStyle="light-content" />
+        <Grid style={{ backgroundColor: bgColor ? bgColor : '#0142ad', minHeight: 60 }}>
           <Row style={{ marginLeft: 10, marginTop: 20 }}>
             <Button transparent onPress={this.onMenuClicked}>
               <Image

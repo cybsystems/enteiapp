@@ -1,4 +1,4 @@
-import { ON_SELECT_CATEGORY, ON_STORE_VIDEO, GET_USER } from '../actionTypes/actionTypes'
+import { ON_SELECT_CATEGORY, ON_STORE_VIDEO, GET_USER, ON_SEARCH_VIDEO } from '../actionTypes/actionTypes'
 import store from '../store/stores';
 
 const initialState = {
@@ -20,15 +20,32 @@ const categoryReducer = (state = {}, action) => {
       videosForCategory = videos.filter(video => video.name == action.category)
       newState.videosForCategory = videosForCategory
       return newState
+
+
     case ON_STORE_VIDEO:
       newState = Object.assign({}, state)
       videos = action.videos
-      newState.videos = videos
-      videosForCategory = videos
-      newState.videosForCategory = videosForCategory
+      newState.videosForCategory = videos
+      newState.videosToShow = videos
+
       return newState
+
+    case ON_SEARCH_VIDEO:
+      const { videosForCategory } = state
+      const { text } = action
+      const videosToShow = videosForCategory.filter(
+        video =>
+          video &&
+          video.videos_title &&
+          (video.videos_title.toLowerCase().includes(text.toLowerCase()) ||
+            video.videos_desc.toLowerCase().includes(text.toLowerCase()))
+      )
+      let newState = Object.assign({}, state)
+      newState.videosToShow = videosToShow
+      return newState
+
     default:
-      return initialState
+      return state
   }
 }
 
