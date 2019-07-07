@@ -6,7 +6,6 @@ export function* getVideos() {
   while (true) {
     const action = yield take(ON_GET_VIDEOS)
     const videos = yield call(fetchVideos)
-
     yield put({ type: ON_STORE_VIDEO, videos })
   }
 }

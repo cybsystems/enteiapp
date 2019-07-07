@@ -1,4 +1,5 @@
-import { ON_SELECT_CATEGORY, ON_STORE_VIDEO } from '../actionTypes/actionTypes'
+import { ON_SELECT_CATEGORY, ON_STORE_VIDEO, GET_USER } from '../actionTypes/actionTypes'
+import store from '../store/stores';
 
 const initialState = {
   bgColor: '#0142ad',
@@ -14,26 +15,18 @@ const categoryReducer = (state = {}, action) => {
     case ON_SELECT_CATEGORY:
       newState = Object.assign({}, state)
       videos = state.videos
-
       newState.category = action.category
       newState.bgColor = action.bgColor
       videosForCategory = videos.filter(video => video.name == action.category)
       newState.videosForCategory = videosForCategory
-
       return newState
-
     case ON_STORE_VIDEO:
       newState = Object.assign({}, state)
       videos = action.videos
       newState.videos = videos
-      videosForCategory = videos.filter(
-        video => video.name == initialState.category
-      )
-
+      videosForCategory = videos
       newState.videosForCategory = videosForCategory
-
       return newState
-
     default:
       return initialState
   }
