@@ -1,13 +1,23 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { WebView } from 'react-native-webview';
+import { Button, Text } from 'native-base';
 
 export default class PDFView extends Component {
     render() {
-        return (
-            <View style={{flex:1}}>
-                <WebView source={{ uri: 'http://bhoomi.pe.hu/pdfs/5.pdf' }} />
+        const pdf = this.props.navigation.getParam('pdf')
 
+        return (
+            <View style={{ flex: 1, alignItems: 'center' }} >
+                <View style={{ margin: '40%' }}>
+                    <Button danger onPress={()=>{
+                            this.props.navigation.navigate('PDFScreen')
+
+                    }}>
+                        <Text>BACK</Text>
+                    </Button>
+                </View>
+                <WebView source={{ uri: 'http://bhoomi.pe.hu/pdfs/' + pdf.pdfs_id + ".pdf" }} />
             </View>
         )
     }

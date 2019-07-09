@@ -14,8 +14,7 @@ import Spinner from 'react-native-loading-spinner-overlay'
 
 import { Button, Input, Grid, Row, Col, Card, CardItem, Body } from 'native-base'
 import { connect } from 'react-redux'
-import RNFetchBlob from 'react-native-fetch-blob'
-
+ 
 import store from '../store/stores';
 
 class PDFScreen extends Component {
@@ -27,31 +26,9 @@ class PDFScreen extends Component {
     componentDidMount() {
         store.dispatch({ type: 'GET_PDFS' })
     }
-    async onPDFClicked(pdf) {
+      onPDFClicked(pdf) {
 
-
-        const { config, fs } = RNFetchBlob;
-        const downloads = fs.dirs.DownloadDir;
-        this.setState({ loading: true })
-        await config({
-            fileCache: true,
-            addAndroidDownloads: {
-                useDownloadManager: true,
-                notification: false,
-                path: downloads + '/' + pdf.pdfs_title + '.pdf',
-            }
-        })
-            .fetch('GET', 'http://bhoomi.pe.hu/pdfs/5.pdf').
-            then(res => {
-                Alert.alert('The file saved to ' + res.path())
-                return true
-            })
-            .catch(err => {
-                Alert.alert('Something Went Wrong')
-                return false
-            })
-            
-        this.setState({ loading: false })
+        this.props.navigation.navigate('PDFView', { pdf })
 
     }
 
