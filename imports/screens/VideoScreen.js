@@ -20,31 +20,33 @@ class VideoScreen extends Component {
     const url =
       'http://bhoomi.pe.hu/entei/showvideo.html?video=' + video.videos_url
     let comments = video.comments
-    comments.push({ ITEM_TYPE: 'LAST', vc_id: comments.length ? comments[comments.length - 1].vc_id + 1 : 0 })
+    if (comments && !comments[comments.length - 1].ITEM_TYPE)
+      comments.push({ ITEM_TYPE: 'LAST', vc_id: comments.length ? comments[comments.length - 1].vc_id + 1 : 0 })
 
     return (
       <View  >
         <StatusBar backgroundColor="#0142ad" barStyle="light-content" />
         <WebView
           source={{ uri: url }}
-          style={{ minHeight: 200, backgroundColor: 'white' }}
+          style={{ minHeight: 500, backgroundColor: 'white' }}
         />
 
-
-        <View style={{ marginTop: 220 }}>
+        <View style={{ marginTop: 280 }}>
           <Form>
-            <Item>
+            <Item rounded style={{borderColor:'#0142ad',marginLeft:20,marginRight:20,padding:10}}>
               <Input
                 onChangeText={(value) => {
                   this.comment = value
                 }}
-                onSubmitEditing={() => {
+                 
+                 onSubmitEditing={() => {
                   store.dispatch({ type: ON_SUBMIT_COMMENT, comment: this.comment, videos_id: video.videos_id, users_id: store.getState().login.user.users_id })
                 }} placeholder="Enter Comment" />
             </Item>
           </Form>
 
           <FlatList
+          style={{marginTop:20}}
             data={comments}
             keyExtractor={(item, index) => item.vc_id}
             renderItem={({ item }) => (
@@ -60,10 +62,10 @@ class VideoScreen extends Component {
                 </Card>
               ) :
                 (
-                  <Card>
+                  <Card style={{marginLeft :20,marginRight:20 }}>
                     <CardItem>
                       <Body>
-                        <View style={{ padding: 5 }}>
+                        <View style={{ padding: 5}}>
                           <Text>{item.users_id === currentUser.users_id ? 'You' : item.users_name} </Text>
                           <Text>{item.comment} </Text>
                         </View>

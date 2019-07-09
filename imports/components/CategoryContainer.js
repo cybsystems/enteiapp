@@ -60,7 +60,7 @@ class CategoryContainer extends Component {
                     }}
                     style={styles.itemContainer}
                   >
-                    <View>
+                    <Card style={{paddingBottom:20}}>
                       <Video
                         source={{
                           uri:
@@ -76,8 +76,7 @@ class CategoryContainer extends Component {
                         style={{
                           width: this.screenWidth - 40,
                           height: 200,
-                          paddingHorizontal: 30,
-                        }}
+                         }}
                         paused={true} // Callback when video cannot be loaded
                       />
                       <Text
@@ -85,12 +84,12 @@ class CategoryContainer extends Component {
                           fontSize: 25,
                           color: 'black',
                           marginTop: 20,
-                          marginLeft: 20,
-                        }}
+                          marginLeft:20
+                          }}
                       >
                         {item.videos_title}
                       </Text>
-                    </View>
+                    </Card>
                     <View
                       style={{
                         borderBottomColor: 'black',

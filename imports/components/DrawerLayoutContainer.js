@@ -7,12 +7,15 @@ import Categories from '../screens/Categories'
 import VideoScreen from '../screens/VideoScreen'
 import UserCategoryScreen from '../screens/UserCategoryScreen';
 import PDFScreen from '../screens/PDFScreen';
-
+import PDFView from '../screens/PDFView';
+ 
 const DrawerNavigator = createDrawerNavigator(
   {
     Categories: { screen: UserCategoryScreen },
     VideoScreen: { screen: VideoScreen },
-    PDFScreen: { screen: PDFScreen }
+    PDFScreen: { screen: PDFScreen },
+    PDFView:{screen:PDFView  }
+
   },
   {
     initialRouteName: 'Categories',

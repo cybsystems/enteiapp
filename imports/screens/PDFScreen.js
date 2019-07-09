@@ -7,20 +7,54 @@ import {
     Image, TouchableOpacity,
     Text,
     Dimensions,
+    Alert,
+
 } from 'react-native'
+import Spinner from 'react-native-loading-spinner-overlay'
+
 import { Button, Input, Grid, Row, Col, Card, CardItem, Body } from 'native-base'
 import { connect } from 'react-redux'
+import RNFetchBlob from 'react-native-fetch-blob'
 
 import store from '../store/stores';
 
 class PDFScreen extends Component {
 
+    state = { loading: false }
     onMenuClicked = () => {
         this.props.navigation.toggleDrawer()
     }
     componentDidMount() {
         store.dispatch({ type: 'GET_PDFS' })
     }
+    async onPDFClicked(pdf) {
+
+
+        const { config, fs } = RNFetchBlob;
+        const downloads = fs.dirs.DownloadDir;
+        this.setState({ loading: true })
+        await config({
+            fileCache: true,
+            addAndroidDownloads: {
+                useDownloadManager: true,
+                notification: false,
+                path: downloads + '/' + pdf.pdfs_title + '.pdf',
+            }
+        })
+            .fetch('GET', 'http://bhoomi.pe.hu/pdfs/5.pdf').
+            then(res => {
+                Alert.alert('The file saved to ' + res.path())
+                return true
+            })
+            .catch(err => {
+                Alert.alert('Something Went Wrong')
+                return false
+            })
+            
+        this.setState({ loading: false })
+
+    }
+
     onSearch = text => {
     }
 
@@ -28,10 +62,13 @@ class PDFScreen extends Component {
         const screenWidth = Math.round(Dimensions.get('window').width)
         const { category } = this.props
         const { pdfsToShow } = category
- 
+
         return (
             <View>
+
                 <StatusBar backgroundColor={'#0142ad'} barStyle="light-content" />
+                <Spinner visible={this.state.loading} textContent={'Downloading...'} textStyle={styles.spinnerTextStyle} />
+
                 <Grid style={{ backgroundColor: '#0142ad', minHeight: 100 }}>
                     <Row style={{ marginLeft: 10, marginBottom: 60, marginTop: 30 }}>
                         <Button transparent onPress={this.onMenuClicked}>
@@ -63,10 +100,10 @@ class PDFScreen extends Component {
                         pdfsToShow ? (
                             <React.Fragment>
                                 {pdfsToShow.length == 0 ?
-                                    <View style={{ alignSelf: 'center' }}>
+                                    (<View style={{ alignSelf: 'center' }}>
                                         <Text>NO PDFS</Text>
-                                    </View> :
-                                    <PDFList pdfList={pdfsToShow} />
+                                    </View>) :
+                                    <PDFList onPDFClicked={this.onPDFClicked.bind(this)} pdfList={pdfsToShow} />
                                 }
                             </React.Fragment>)
                             : <Text style={{ alignSelf: 'center' }}>Loading PDFS</Text>
@@ -95,7 +132,7 @@ export default connect(
 class PDFList extends React.Component {
 
     render() {
-        const { pdfList } = this.props
+        const { pdfList, onPDFClicked } = this.props
 
         if (pdfList && !pdfList[pdfList.length - 1].ITEM_TYPE)
             pdfList.push({
@@ -124,31 +161,24 @@ class PDFList extends React.Component {
                                 </Card>
                             ) : (
                                     <TouchableOpacity
-                                        onPress={() => {
-
-                                        }}
+                                        onPress={() => { onPDFClicked(item) }}
                                         style={styles.itemContainer}
                                     >
-                                        <View>
+                                        <Card style={{ padding: 20 }}>
+                                            <CardItem style={{ alignItems: 'center' }}>
+                                                <Text
+                                                    style={{
+                                                        fontSize: 25,
+                                                        color: 'black',
 
-                                            <Text
-                                                style={{
-                                                    fontSize: 25,
-                                                    color: 'black',
-                                                    marginTop: 20,
-                                                    marginLeft: 20,
-                                                }}
-                                            >
-                                                {item.pdfs_title}
-                                            </Text>
-                                        </View>
-                                        <View
-                                            style={{
-                                                borderBottomColor: 'black',
-                                                borderBottomWidth: 0.2,
-                                                marginTop: 20,
-                                            }}
-                                        />
+                                                        alignSelf: 'center'
+                                                    }}
+                                                >
+                                                    {item.pdfs_title}
+                                                </Text>
+                                            </CardItem>
+                                        </Card>
+
                                     </TouchableOpacity>
                                 )}
                         </View>
@@ -159,6 +189,9 @@ class PDFList extends React.Component {
     }
 }
 const styles = StyleSheet.create({
+    spinnerTextStyle: {
+        color: '#FFF',
+    },
     itemContainer: {
         borderRadius: 5,
         margin: 20,
