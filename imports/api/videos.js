@@ -50,6 +50,7 @@ export const fetchVideos = async () => {
     .then(resData => {
       return resData
     })
+     
   return response.videos
 }
 // SELECT T2.users_name,T1.comment FROM videos_comments as T1 , users as T2 where T1.videos_id=103 and T1.users_id=T2.users_id
