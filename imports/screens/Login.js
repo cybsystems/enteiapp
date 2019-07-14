@@ -1,12 +1,13 @@
 import React from 'react'
 
 import { StyleSheet, Text, View, StatusBar } from 'react-native'
- import { connect } from 'react-redux'
+import { connect } from 'react-redux'
 import { onIsLogin } from '../actions/login_actions'
 import Spinner from 'react-native-loading-spinner-overlay'
 import LoginView from 'react-native-animated-login'
 import LoginComponent from '../components/LoginComponent';
-  
+import store from '../store/stores';
+
 
 class Login extends React.Component {
   state = { loading: false, showLoginFailed: false }
@@ -32,9 +33,9 @@ class Login extends React.Component {
   onLogin = () => {
     const { navigate } = this.props.navigation
     const { userName, passWord } = this.props.credentials
-    this.setState({ loading: true, showLoginFailed: false })
+     this.setState({ loading: true, showLoginFailed: false })
     this.props.isLogin(userName, passWord)
-  }
+   }
   render() {
     return (
       <View
@@ -67,7 +68,7 @@ class Login extends React.Component {
     )
   }
 }
- 
+
 const styles = StyleSheet.create({
   bottomText: {
     flex: 1,
@@ -104,6 +105,7 @@ const mapDispatchToProps = dispatch => {
     isLogin: (username, password) => {
       dispatch(onIsLogin(username, password))
     },
+    
   }
 }
 

@@ -22,16 +22,17 @@ export default class AppContainerWithLogin extends React.Component {
 
   constructor() {
     super()
+
     this.state = { showNothing: true, showRegister: false }
   }
-  showLogin=()=> {
+  showLogin = () => {
     this.setState({ showNothing: false, showRegister: false })
 
   }
   componentDidMount() {
     const me = this
     SharedPreferences.getItem('isRegistered', (value) => {
-      me.setState({ showNothing: false, showRegister: true })
+      me.setState({ showNothing: false, showRegister: value != 'true' })
     })
   }
 

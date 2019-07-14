@@ -18,7 +18,9 @@ export function* submitComment() {
 }
 
 export function* getPDFS() {
-  const action = yield take('GET_PDFS');
-  const pdfs = yield call(fetchPDFS)
-  yield put({ type: 'ON_STORE_PDF', pdfs })
+  while (true) {
+    const action = yield take('GET_PDFS');
+    const pdfs = yield call(fetchPDFS)
+    yield put({ type: 'ON_STORE_PDF', pdfs })
+  }
 }

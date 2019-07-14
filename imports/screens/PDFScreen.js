@@ -23,16 +23,16 @@ class PDFScreen extends Component {
     onMenuClicked = () => {
         this.props.navigation.toggleDrawer()
     }
-    componentDidMount() {
-        store.dispatch({ type: 'GET_PDFS' })
-    }
-      onPDFClicked(pdf) {
-
+     
+     onPDFClicked(pdf) {
         this.props.navigation.navigate('PDFView', { pdf })
-
     }
 
     onSearch = text => {
+    }
+    componentDidMount()
+    {
+        store.dispatch({type:'GET_PDFS'})
     }
 
     render() {

@@ -2,6 +2,7 @@ import React from "react";
 import { AppRegistry, Image, StatusBar } from "react-native";
 import { Container, Content, Text, List, ListItem, View } from "native-base";
 import store from "../store/stores";
+import { ON_GET_VIDEOS } from "../actionTypes/actionTypes";
 const routes = [{ label: "Videos", to: 'Categories' }, { label: "PDFs", to: 'PDFScreen' }];
 
 export default class DrawerMenu extends React.Component {
@@ -35,7 +36,7 @@ export default class DrawerMenu extends React.Component {
                 <ListItem
                   button
                   onPress={() => {
-                     
+
                     this.props.navigation.navigate(data.to)
                   }
                   }>

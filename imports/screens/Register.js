@@ -54,6 +54,7 @@ export default class Register extends Component {
             body: formData1,
         }).then(res => res.json()).then(res => {
             Alert.alert('Registered Successfully Please Ask Your Teacher To Activate You')
+            SharedPreferences.setItem('isRegistered','true');
             me.props.showLogin()
             return res
         }).catch(err => {
@@ -73,13 +74,13 @@ export default class Register extends Component {
         return (
             <View style={{ backgroundColor: '#dcdae0', flex: 1 }}>
                 <StatusBar backgroundColor="#512DA8" barStyle="loght-content" />
-                <Card style={{ marginLeft: 20, marginRight: 20, marginTop: 20, paddingBottom: 60 }} >
-                    <CardItem style={{ maxHeight: '100%' }}>
+                <Card style={{ marginLeft: 20, marginRight: 20, marginTop: 20, paddingBottom: 80 }} >
+                    <CardItem  >
                         <Content>
-                            <Image
-                                style={{ width: 120, marginTop: 20, height: 120, alignSelf: 'center' }}
+                            {/* <Image
+                                style={{ width: 120, marginTop: 20, height: 80, alignSelf: 'center' }}
                                 source={require('../../assets/logo.png')}
-                            />
+                            /> */}
                             <Form style={{ marginTop: 30 }}>
                                 <Item>
                                     <Picker
