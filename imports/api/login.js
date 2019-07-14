@@ -2,7 +2,7 @@ export const checkLogin = async (username, password) => {
   const formData = new FormData()
 
   const sql =
-    "select * from users where  users_uname like binary '" +
+    "select * from users where activate=1 and  users_uname like binary '" +
     username +
     "' and users_password like binary '" +
     password +
