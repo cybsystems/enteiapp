@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react'
-import { View, StatusBar, FlatList, Text, Dimensions } from 'react-native'
+import { View, StatusBar, FlatList, Text, Dimensions,Alert } from 'react-native'
 import WebView from 'react-native-android-fullscreen-webview-video'
 import { Input, Form, Item, Card, CardItem, Body } from 'native-base';
 import store from '../store/stores';
@@ -10,6 +10,7 @@ import { ON_SUBMIT_COMMENT } from '../actionTypes/actionTypes';
 class VideoScreen extends Component {
   constructor() {
     super()
+    this.state={comment:''}
     this.comment = null
   }
   render() {
@@ -20,8 +21,8 @@ class VideoScreen extends Component {
     const url =
       'http://bhoomi.pe.hu/entei/showvideo.html?video=' + video.videos_url
     let comments = video.comments
-    if (comments && !comments[comments.length - 1].ITEM_TYPE)
-      comments.push({ ITEM_TYPE: 'LAST', vc_id: comments.length ? comments[comments.length - 1].vc_id + 1 : 0 })
+    if (comments && comments.length > 0 && !comments[comments.length - 1].ITEM_TYPE)
+       comments.push({ ITEM_TYPE: 'LAST', vc_id: comments.length ? comments[comments.length - 1].vc_id + 1 : 0 })
 
     return (
       <View  >
@@ -33,20 +34,24 @@ class VideoScreen extends Component {
 
         <View style={{ marginTop: 280 }}>
           <Form>
-            <Item rounded style={{borderColor:'#0142ad',marginLeft:20,marginRight:20,padding:10}}>
+            <Item rounded style={{ borderColor: '#0142ad', marginLeft: 20, marginRight: 20, padding: 10 }}>
               <Input
                 onChangeText={(value) => {
                   this.comment = value
+                  this.setState({comment:value})
                 }}
-                 
-                 onSubmitEditing={() => {
+                value={this.state.comment}
+                onSubmitEditing={() => {
                   store.dispatch({ type: ON_SUBMIT_COMMENT, comment: this.comment, videos_id: video.videos_id, users_id: store.getState().login.user.users_id })
-                }} placeholder="Enter Comment" />
+                  this.setState({comment:''})
+                  Alert.alert('Comment Added');
+
+               }} placeholder="Enter Comment" />
             </Item>
           </Form>
 
           <FlatList
-          style={{marginTop:20}}
+            style={{ marginTop: 20 }}
             data={comments}
             keyExtractor={(item, index) => item.vc_id}
             renderItem={({ item }) => (
@@ -62,10 +67,10 @@ class VideoScreen extends Component {
                 </Card>
               ) :
                 (
-                  <Card style={{marginLeft :20,marginRight:20 }}>
+                  <Card style={{ marginLeft: 20, marginRight: 20 }}>
                     <CardItem>
                       <Body>
-                        <View style={{ padding: 5}}>
+                        <View style={{ padding: 5 }}>
                           <Text>{item.users_id === currentUser.users_id ? 'You' : item.users_name} </Text>
                           <Text>{item.comment} </Text>
                         </View>

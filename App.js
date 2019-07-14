@@ -24,7 +24,7 @@ export default class App extends React.Component {
 
 
   onStartClicked() {
-    this.setState({ showHomePage: false,showSplash:true })
+    this.setState({ showHomePage: false, showSplash: true })
     setTimeout(() => {
       this.setState({ showSplash: false });
     }, 1000);
@@ -37,7 +37,7 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <StatusBar backgroundColor="#512DA8" barStyle="loght-content" />
         {
-          showHomePage  ?
+          showHomePage ?
             <HomePage onStart={this.onStartClicked.bind(this)} />
             :
             showSplash ? <Splash /> : <AppContainerWithLogin />
@@ -53,7 +53,10 @@ const HomePage = ({ onStart }) => {
     { name: "Marathi Medium", code: "#1abc9c" },
     { name: "Semi English", code: "#3498db" },
     { name: "CBSCE", code: "#34495e" },
-    { name: "ICSE", code: "#d35400" }
+    { name: "ICSE", code: "#d35400" },
+    { name: "MPSC", code: "#d35400" },
+    { name: "UPSC", code: "#d35400" },
+
   ];
 
   return (
@@ -64,7 +67,7 @@ const HomePage = ({ onStart }) => {
 
           color: "black",
           alignSelf: "center",
-          marginTop: 50
+          marginTop: 25
         }}
       >
         Welcome To Bhoomi Classes
@@ -84,7 +87,7 @@ const HomePage = ({ onStart }) => {
           </View>
         )}
       />
-      <View style={{ alignSelf: "center", marginBottom: "30%" }}>
+      <View style={{ alignSelf: "center", marginBottom: "2%" }}>
         <Button onPress={() => {
           onStart()
 
@@ -108,7 +111,7 @@ const styles = StyleSheet.create({
   },
   gridView: {
     marginTop: 20,
-    flex: 1
+    height: '100%'
   },
   itemContainer: {
     justifyContent: "center",

@@ -30,6 +30,7 @@ class PDFScreen extends Component {
 
     onSearch = text => {
     }
+    
     componentDidMount()
     {
         store.dispatch({type:'GET_PDFS'})
