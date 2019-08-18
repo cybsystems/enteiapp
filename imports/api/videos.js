@@ -15,13 +15,12 @@ export const insertComment = async ({ users_id, videos_id, comment }) => {
 	});
 };
 export const fetchPDFS = async () => {
+ 
 	const user = store.getState().login.user;
 	const formData = new FormData();
 	formData.append("u_id", user.users_id);
-	formData.append("u_class", user.clss);
-	formData.append("u_cat", user.cat);
 
-	let response = await fetch("http://bhoomi.pe.hu/entei/getPDFsByClass.php", {
+	let response = await fetch("http://bhoomi.pe.hu/entei/getp.php", {
 		method: "POST",
 		body: formData,
 	})
@@ -53,3 +52,4 @@ export const fetchVideos = async () => {
 	return response.videos;
 };
 // SELECT T2.users_name,T1.comment FROM videos_comments as T1 , users as T2 where T1.videos_id=103 and T1.users_id=T2.users_id
+ 

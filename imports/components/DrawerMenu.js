@@ -10,9 +10,8 @@ import {
 	Button,
 } from "native-base";
 import store from "../store/stores";
-import { ON_GET_VIDEOS } from "../actionTypes/actionTypes";
-import { getPDFS } from "../saga/videosSaga";
 import { getVideos } from "../actions/category_actions";
+
 const routes = [
 	{ label: "Videos", to: "Categories" },
 	{ label: "PDFs", to: "PDFScreen" },
@@ -38,7 +37,10 @@ export default class DrawerMenu extends React.Component {
 								source={require("../../assets/man.png")}
 							/>
 							<Text style={{ color: "white", fontSize: 30 }}>
-								Hi {store.getState().login.user.users_name}
+								Hi{" "}
+								{store.getState().login.user.users_firstname
+									? store.getState().login.user.users_firstname
+									: ""}
 							</Text>
 						</View>
 					</View>
@@ -62,7 +64,7 @@ export default class DrawerMenu extends React.Component {
 							onPress={async () => {
 								try {
 									await store.dispatch(getVideos());
-									await store.dispatch(getPDFS());
+									await store.dispatch({ type: "GET_PDFS" });
 								} catch (err) {}
 							}}>
 							<Text>Refresh</Text>

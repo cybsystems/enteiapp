@@ -24,6 +24,8 @@ export default class Register extends Component {
 		phone: "",
 		selectedCategory: -1,
 		selectedClass: -1,
+		firstName: "",
+		lastName: "",
 	};
 
 	async componentDidMount() {
@@ -49,6 +51,8 @@ export default class Register extends Component {
 			selectedCategory,
 			selectedClass,
 			phone,
+			firstName,
+			lastName,
 		} = this.state;
 
 		if (!selectedCategory) {
@@ -77,6 +81,16 @@ export default class Register extends Component {
 			Alert.alert("Enter Password");
 			return;
 		}
+		if (!firstName) {
+			Alert.alert("Enter First Name");
+			return;
+		}
+
+		if (!lastName) {
+			Alert.alert("Enter Last Name");
+			return;
+		}
+
 		let sql = "select * from users where users_uname='" + userName + "'";
 		let formData = new FormData();
 		formData.append("sql", sql);
@@ -95,7 +109,7 @@ export default class Register extends Component {
 		let category = this.state.categories.filter(
 			item => item.cat_id == selectedCategory
 		)[0].name;
-		let sql1 = `INSERT INTO users (  users_name, users_uname, users_password, cat, clss, activate,phone) values('${userName}','${userName}','${password}','${category}'," ${selectedClass} ",0,'${phone}')`;
+		let sql1 = `INSERT INTO users (users_name, users_uname, users_password, cat, clss, activate,phone,users_firstname,users_lastname) values('${userName}','${userName}','${password}','${category}'," ${selectedClass} ",0,'${phone}','${firstName}','${lastName}')`;
 		let formData1 = new FormData();
 		formData1.append("sql", sql1);
 
@@ -176,6 +190,20 @@ export default class Register extends Component {
 									</Picker>
 								</Item>
 								<Item floatingLabel>
+									<Label>First Name</Label>
+									<Input
+										onChangeText={text => this.setState({ firstName: text })}
+									/>
+								</Item>
+
+								<Item floatingLabel>
+									<Label>Last Name</Label>
+									<Input
+										onChangeText={text => this.setState({ lastName: text })}
+									/>
+								</Item>
+
+								<Item floatingLabel>
 									<Label>Username</Label>
 									<Input
 										onChangeText={text => this.setState({ userName: text })}
@@ -191,12 +219,14 @@ export default class Register extends Component {
 								<Item floatingLabel>
 									<Label>Password</Label>
 									<Input
+										secureTextEntry={true}
 										onChangeText={text => this.setState({ password: text })}
 									/>
 								</Item>
 								<Item floatingLabel last>
 									<Label>Confirm Password </Label>
 									<Input
+										secureTextEntry={true}
 										onChangeText={text => this.setState({ cpassword: text })}
 									/>
 								</Item>
