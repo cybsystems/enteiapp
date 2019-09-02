@@ -6,7 +6,7 @@ import store from '../store/stores'
 const LoginComponent = () => (
   <View>
     <Item floatingLabel>
-      <Label>Email</Label>
+      <Label>Email or Username</Label>
       <Input
         onChangeText={value => {
           store.dispatch({ type: 'ON_USERNAME_CHANGE', value: value })
