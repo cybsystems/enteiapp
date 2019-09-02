@@ -2,18 +2,16 @@ import React, { Component } from "react";
 import {
 	View,
 	Text,
-	Image,
-	TouchableOpacity,
 	StyleSheet,
 	FlatList,
 	Dimensions,
+	Animated,
 } from "react-native";
 import Video from "react-native-video";
 import { Card, CardItem, Body } from "native-base";
+import VideoCard from "./VideoCard";
 class CategoryContainer extends Component {
-	onOpenVideo = () => {
-		this.props.navigation.navigate("VideoScreen");
-	};
+	state = { slideUpValue: new Animated.Value(0) };
 
 	_keyExtractor = (item, index) => item.videos_id;
 
@@ -22,15 +20,24 @@ class CategoryContainer extends Component {
 		this.player = {};
 		this.screenWidth = Math.round(Dimensions.get("window").width);
 	}
-
+	componentDidMount() {
+		this._start();
+	}
 	onVideoSelect = video => {
 		this.props.navigation.navigate("VideoScreen", { video });
 	};
-
+	_start = () => {
+		return Animated.parallel([
+			Animated.timing(this.state.slideUpValue, {
+				toValue: 1,
+				duration: 500,
+				useNativeDriver: true,
+			}),
+		]).start();
+	};
 	render() {
-		const { bgColor } = this.props.category;
 		let { videos } = this.props;
-
+		const { slideUpValue } = this.state;
 		if (videos && !videos[videos.length - 1].ITEM_TYPE)
 			videos.push({
 				videos_id: videos[videos.length - 1].videos_id + 1,
@@ -55,67 +62,19 @@ class CategoryContainer extends Component {
 									</CardItem>
 								</Card>
 							) : (
-								<TouchableOpacity
-									onPress={() => {
-										this.onVideoSelect(item);
-									}}
-									style={styles.itemContainer}>
-									<Card style={{ paddingBottom: 20 }}>
-										<Video
-											source={{
-												uri:
-													"http://bhoomi.pe.hu/videos/" +
-													item.videos_id +
-													".mp4",
-											}}
-											ref={ref => {
-												this.player = ref;
-											}} // Store reference
-											onBuffer={() => {}} // Callback when remote video is buffering
-											onError={() => {}}
-											style={{
-												width: this.screenWidth - 40,
-												height: 200,
-											}}
-											paused={true} // Callback when video cannot be loaded
-										/>
-										<Text
-											style={{
-												fontSize: 25,
-												color: "black",
-												marginTop: 20,
-												marginLeft: 20,
-											}}>
-										Title:	{item.videos_title}
-										</Text>
-
-										<Text
-											style={{
-												fontSize: 25,
-												color: "black",
-												marginTop: 20,
-												marginLeft: 20,
-											}}>
-										Category:	{item.category.label}
-										</Text>
-                    <Text
-											style={{
-												fontSize: 25,
-												color: "black",
-												marginTop: 20,
-												marginLeft: 20,
-											}}>
-										Class:	{item.videos_class}
-										</Text>
-									</Card>
-									<View
-										style={{
-											borderBottomColor: "black",
-											borderBottomWidth: 0.2,
-											marginTop: 20,
-										}}
-									/>
-								</TouchableOpacity>
+								<Animated.View
+									style={{
+										transform: [
+											{
+												translateY: slideUpValue.interpolate({
+													inputRange: [0, 1],
+													outputRange: [600, 0],
+												}),
+											},
+										],
+									}}>
+									<VideoCard video={item} onVideoClick={this.onVideoSelect} />
+								</Animated.View>
 							)}
 						</View>
 					)}
